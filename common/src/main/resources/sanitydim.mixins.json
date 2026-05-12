@@ -1,0 +1,21 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "croissantnova.sanitydim.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "mixins": [
+    "MixinAnimal",
+    "MixinEnderMan",
+    "MixinEntity",
+    "MixinFlowerPotBlock",
+    "MixinPlayer",
+    "MixinTemptGoal",
+    "MixinThrownEgg",
+    "MixinVillager"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1,
+    "maxShiftBy": 3
+  }
+}

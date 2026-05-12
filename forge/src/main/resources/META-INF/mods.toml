@@ -1,0 +1,39 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+license = "All rights reserved"
+issueTrackerURL = "https://github.com/croissantnova/SanityDescentIntoMadness/issues"
+
+[[mods]]
+    modId = "sanitydim"
+    version = "${version}"
+    displayName = "Sanity: Descent Into Madness"
+    description = '''Brings the sanity mechanic from Don't Starve into Minecraft'''
+    authors = "croissantnova"
+    credits = "toujourspareil, Zapsplat"
+
+[[dependencies.sanitydim]]
+    modId = "forge"
+    mandatory = true
+    versionRange = "[47,)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.sanitydim]]
+    modId = "minecraft"
+    mandatory = true
+    versionRange = "[1.20.1,1.21)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[dependencies.sanitydim]]
+    modId = "architectury"
+    mandatory = true
+    versionRange = "[9,)"
+    ordering = "NONE"
+    side = "BOTH"
+
+[[mixins]]
+    config = "sanitydim.mixins.json"
+
+[[mixins]]
+    config = "sanitydim.forge.mixins.json"

@@ -17,9 +17,13 @@ out
 build
 .gradle
 
+# loom / architectury
+**/run/
+**/.loom-cache/
+remappedSrc
+
 # other
 eclipse
-run
 
 # Files from Forge MDK
 forge*changelog.txt

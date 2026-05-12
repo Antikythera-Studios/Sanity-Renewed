@@ -1,0 +1,10 @@
+architectury {
+    common(project.enabled_platforms.split(","))
+}
+
+dependencies {
+    modImplementation "dev.architectury:architectury:${project.architectury_version}"
+
+    // Forge Config API common (compile-time only on common; loader-specific runtime is added per subproject)
+    modCompileOnly "fuzs.forgeconfigapiport:forgeconfigapiport-common:${project.forge_config_api_port_version}"
+}

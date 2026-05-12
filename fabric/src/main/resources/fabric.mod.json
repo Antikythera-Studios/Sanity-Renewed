@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "sanitydim",
+  "version": "${version}",
+  "name": "Sanity: Descent Into Madness",
+  "description": "Brings the sanity mechanic from Don't Starve into Minecraft",
+  "authors": ["croissantnova"],
+  "contact": {
+    "issues": "https://github.com/croissantnova/SanityDescentIntoMadness/issues"
+  },
+  "license": "All rights reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["croissantnova.sanitydim.fabric.SanityFabric"],
+    "client": ["croissantnova.sanitydim.fabric.SanityFabricClient"]
+  },
+  "mixins": [
+    "sanitydim.mixins.json",
+    "sanitydim.fabric.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.15",
+    "fabric-api": "*",
+    "architectury": ">=9",
+    "forgeconfigapiport": "*",
+    "minecraft": "~1.20.1",
+    "java": ">=17"
+  }
+}
