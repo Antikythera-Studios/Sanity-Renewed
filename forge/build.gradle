@@ -30,6 +30,12 @@ dependencies {
 
     modApi "dev.architectury:architectury-forge:${project.architectury_version}"
 
+    modImplementation "software.bernie.geckolib:geckolib-forge-${project.mc_version}:${project.geckolib_version}"
+    // GeckoLib pulls in mclib but Forge's dev classloader does not expose
+    // transitive Maven deps to runtime — bundle it explicitly.
+    forgeRuntimeLibrary "com.eliotlash.mclib:mclib:20"
+    implementation "com.eliotlash.mclib:mclib:20"
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive false }
 }

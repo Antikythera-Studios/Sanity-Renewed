@@ -1,0 +1,38 @@
+{
+	"entity.sanity_renewed.rotting_stalker": "Rotting Stalker",
+	"entity.sanity_renewed.sneaking_terror": "Sneaking Terror",
+	
+	"commands.sanity.set.success.single": "Set %s's sanity to %s",
+	"commands.sanity.set.success.multiple": "Set sanity to %s for %s players",
+	"commands.sanity.add.success.single": "Added %s sanity to %s",
+	"commands.sanity.add.success.multiple": "Added %s sanity to %s players",
+	"commands.sanity.config.reload": "Reloaded dimension configs successfully",
+	
+	"gui.sanity_renewed.hint00": "What are these sounds?",
+	"gui.sanity_renewed.hint01": "I'm feeling a bit uneasy",
+	"gui.sanity_renewed.hint02": "What was that?",
+	"gui.sanity_renewed.hint03": "What a strange feeling...",
+	"gui.sanity_renewed.hint04": "I don't like this...",
+	"gui.sanity_renewed.hint05": "Huh?",
+	"gui.sanity_renewed.hint06": "Hmm?",
+	"gui.sanity_renewed.hint07": "What?",
+	"gui.sanity_renewed.hint08": "What's there?",
+	"gui.sanity_renewed.hint09": "Was that me?",
+	"gui.sanity_renewed.hint010": "Weird...",
+	"gui.sanity_renewed.hint011": "Did I just see something?",
+	"gui.sanity_renewed.hint10": "SOMEONE'S BEHIND ME",
+	"gui.sanity_renewed.hint11": "One, two, three, four...",
+	"gui.sanity_renewed.hint12": "...five, six, seven, eight...",
+	"gui.sanity_renewed.hint13": "THEY ARE IN MY HEAD",
+	"gui.sanity_renewed.hint14": "LEAVE ME ALONE",
+	"gui.sanity_renewed.hint15": "DON'T SPACE OUT",
+	"gui.sanity_renewed.hint16": "WHY WON'T THEY GO AWAY?!",
+	"gui.sanity_renewed.hint17": "TOO LOUD TOO LOUD TOO LOUD",
+	"gui.sanity_renewed.hint18": "THE VOICES... I CAN'T...",
+
+	"item.sanity_renewed.tooltip.press_shift": "§7Press §9SHIFT§7 for more information",
+	"item.sanity_renewed.garland": "Garland",
+	"item.sanity_renewed.garland.tooltip": "§7Something to help soothe the nerves\n\nSlowly restores your sanity and makes you slightly more resistant to stress",
+
+	"itemGroup.sanity_renewed": "Sanity: Renewed"
+}

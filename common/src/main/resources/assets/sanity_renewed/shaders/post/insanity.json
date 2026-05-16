@@ -1,0 +1,35 @@
+{
+  "targets": [
+    "swap"
+  ],
+  "passes": [
+    {
+      "name": "insanity",
+      "intarget": "minecraft:main",
+      "outtarget": "swap",
+      "uniforms": [
+        { "name": "DesaturateFactor", "values": [ 0.0 ] },
+        { "name": "SpreadFactor",     "values": [ 0.0 ] }
+      ]
+    },
+    {
+      "name": "blit",
+      "intarget": "swap",
+      "outtarget": "minecraft:main"
+    },
+    {
+      "name": "chromatical",
+      "intarget": "minecraft:main",
+      "outtarget": "swap",
+      "uniforms": [
+        { "name": "TimeTotal", "values": [ 0.0 ] },
+        { "name": "Factor",    "values": [ 0.0 ] }
+      ]
+    },
+    {
+      "name": "blit",
+      "intarget": "swap",
+      "outtarget": "minecraft:main"
+    }
+  ]
+}

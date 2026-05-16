@@ -25,8 +25,8 @@ subprojects {
         maven { url = "https://maven.architectury.dev/" }
         maven { url = "https://maven.minecraftforge.net/" }
         maven { url = "https://maven.fabricmc.net/" }
-        // GeckoLib (kept as comment for later — uncomment when porting renderers)
-        // maven { url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" }
+        // GeckoLib — animated entity renderers (used by InnerEntity)
+        maven { url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" }
         // Forge Config API Port (Fabric) — Fuzs maven
         maven {
             name = "Fuzs Mod Resources"

@@ -10,5 +10,5 @@ pluginManagement {
     }
 }
 
-rootProject.name = "sanitydim"
+rootProject.name = "sanity_renewed"
 include("common", "forge", "fabric")

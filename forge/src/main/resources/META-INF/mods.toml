@@ -1,39 +1,46 @@
 modLoader = "javafml"
 loaderVersion = "[47,)"
-license = "All rights reserved"
+license = "MIT"
 issueTrackerURL = "https://github.com/croissantnova/SanityDescentIntoMadness/issues"
 
 [[mods]]
-    modId = "sanitydim"
+    modId = "sanity_renewed"
     version = "${version}"
-    displayName = "Sanity: Descent Into Madness"
+    displayName = "Sanity: Renewed"
     description = '''Brings the sanity mechanic from Don't Starve into Minecraft'''
-    authors = "croissantnova"
+    authors = "croissantnova, guivnf"
     credits = "toujourspareil, Zapsplat"
 
-[[dependencies.sanitydim]]
+[[dependencies.sanity_renewed]]
     modId = "forge"
     mandatory = true
     versionRange = "[47,)"
     ordering = "NONE"
     side = "BOTH"
 
-[[dependencies.sanitydim]]
+[[dependencies.sanity_renewed]]
     modId = "minecraft"
     mandatory = true
     versionRange = "[1.20.1,1.21)"
     ordering = "NONE"
     side = "BOTH"
 
-[[dependencies.sanitydim]]
+[[dependencies.sanity_renewed]]
     modId = "architectury"
     mandatory = true
     versionRange = "[9,)"
     ordering = "NONE"
     side = "BOTH"
 
-[[mixins]]
-    config = "sanitydim.mixins.json"
+[[dependencies.sanity_renewed]]
+    modId = "geckolib"
+    mandatory = true
+    versionRange = "[4.8,)"
+    ordering = "NONE"
+    side = "BOTH"
 
 [[mixins]]
-    config = "sanitydim.forge.mixins.json"
+    config = "sanity_renewed.mixins.json"
+
+[[mixins]]
+    config = "sanity_renewed.forge.mixins.json"

@@ -7,4 +7,7 @@ dependencies {
 
     // Forge Config API common (compile-time only on common; loader-specific runtime is added per subproject)
     modCompileOnly "fuzs.forgeconfigapiport:forgeconfigapiport-common:${project.forge_config_api_port_version}"
+
+    // GeckoLib — compile against the Forge artifact in common; loader-specific runtime is added per subproject.
+    modCompileOnly "software.bernie.geckolib:geckolib-forge-${project.mc_version}:${project.geckolib_version}"
 }

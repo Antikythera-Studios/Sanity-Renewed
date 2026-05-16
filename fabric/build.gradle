@@ -30,6 +30,8 @@ dependencies {
     // Forge Config API Port (Fuzs) — gives common code Forge-style ConfigSpec on Fabric.
     modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:${project.forge_config_api_port_version}"
 
+    modImplementation "software.bernie.geckolib:geckolib-fabric-${project.mc_version}:${project.geckolib_version}"
+
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 }
