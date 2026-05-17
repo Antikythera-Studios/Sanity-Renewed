@@ -89,7 +89,7 @@ This version is a 1:1 rewritte of Sanity: Descend Into Madness, with support for
 
 Credit goes to [croissantnova](https://www.curseforge.com/members/croissantnova/projects) for the original concept and implementation. If you enjoy this mod, consider supporting his future projects and of course, Sanity: Descend Into Madness, this project would never be here if it wasn't for his awesome work ❤️.
 
-Check the original mod's page [here], for older versions and to give the original authors support
+Check the original mod's page [[here]](https://www.curseforge.com/minecraft/mc-mods/sanity-descent-into-madness), for older versions and to give the original authors support
 
 #### Credits
 * [croissantnova](https://github.com/croissantnova) - programmer and artist,<br/>
