@@ -1,6 +1,7 @@
-<img width="1200" height="800" alt="sanity_title2 (1)" src="https://github.com/user-attachments/assets/1de15a37-0aa8-4b50-a2c8-615a18202af4" />
+<p align="center"><img src="https://github.com/user-attachments/assets/1de15a37-0aa8-4b50-a2c8-615a18202af4" style="width:800px;"/></p>
 
-***
+<p align="center"><img src="https://github.com/Antikythera-Studios/EpicFight-Files/raw/Wiki-Images/Icons/new_icons/line_breaker.png"  style="width:1000px;"/></p>
+
 # Sanity: Renewed 🧠
 
 Sanity: Renewed introduces a sanity meter inspired by Don't Starve, adding a new mechanic that forces players to manage their mental state alongside hunger and health. Darkness, isolation, hostile creatures, and dangerous situations slowly chip away at your sanity creating scary new situations & events around you, making the game harder.
@@ -24,7 +25,7 @@ As your sanity decreases, reality begins to distort around you. Strange sounds e
   <sub>Check out PIX ROXY's Showcase of Sanity: Descend into Madness</sub>
 </p>
 
-***
+<p align="center"><img src="https://github.com/Antikythera-Studios/EpicFight-Files/raw/Wiki-Images/Icons/new_icons/line_breaker2.png"  style="width:1000px;"/></p>
 
 ## Configuration 👁
 
@@ -80,7 +81,7 @@ The mod also includes dimension-specific configuration support through ``config/
 </table>
 </div>
 
-***
+<p align="center"><img src="https://github.com/Antikythera-Studios/EpicFight-Files/raw/Wiki-Images/Icons/new_icons/line_breaker2.png"  style="width:1000px;"/></p>
 
 ## Important Notice
 This is the 1.20+ unofficial continuation of Sanity: Descent Into Madness, originally created by croissantnova for Forge 1.16-1.20.1. The license is MIT, and i've decided to pick up the project since it hasn't been updated since 2023. Croissantnova [recently said he's working on a new project](https://github.com/croissantnova/SanityDescentIntoMadness/pull/93#issuecomment-2746349988) and he plans to get back to working on Sanity: Descent Into Madness when he deems it polished enough for publish. 
@@ -100,7 +101,7 @@ Check the original mod's page [[here]](https://www.curseforge.com/minecraft/mc-m
 #### License
 See [license](https://raw.githubusercontent.com/croissantnova/SanityDescentIntoMadness/main/LICENSE).
 
-***
+<p align="center"><img src="https://github.com/Antikythera-Studios/EpicFight-Files/raw/Wiki-Images/Icons/new_icons/line_breaker2.png"  style="width:1000px;"/></p>
 
 ## Requirements: 
 Forge/Neoforge:
@@ -111,3 +112,16 @@ Fabric:
 * [**Architectury API**](https://www.curseforge.com/minecraft/mc-mods/architectury-api)
 * [**GeckoLib**](https://www.curseforge.com/minecraft/mc-mods/geckolib)
 * [**Forge Config API Port**](https://www.curseforge.com/minecraft/mc-mods/forge-config-api-port)
+
+<p align="center"><img src="https://github.com/Antikythera-Studios/EpicFight-Files/raw/Wiki-Images/Icons/new_icons/line_breaker2.png"  style="width:1000px;"/></p>
+
+<div align="center">
+  
+  <a href="https://www.patreon.com/bePatron?u=53051224"><img src="https://github.com/Antikythera-Studios/EpicFight-Files/raw/Wiki-Images/Icons/new_icons/patreon.png" alt="Patreon" width="80"/></a>
+<a href="https://discord.com/invite/NbAJwj8RHg"><img src="https://github.com/Antikythera-Studios/EpicFight-Files/raw/Wiki-Images/Icons/new_icons/discord.png" alt="Discord" width="80"/></a>
+<a href="https://www.youtube.com/@yesman4100"><img src="https://github.com/Antikythera-Studios/EpicFight-Files/raw/Wiki-Images/Icons/new_icons/youtube.png" alt="YouTube" width="80"/></a>
+<a href="https://github.com/guivnf/Sanity-Renewed"><img src="https://github.com/Antikythera-Studios/EpicFight-Files/raw/Wiki-Images/Icons/new_icons/github.png" alt="GitHub" width="80"/></a>
+<a href=""><img src="https://github.com/Antikythera-Studios/EpicFight-Files/raw/Wiki-Images/Icons/new_icons/curseforge.png" alt="CurseForge" width="80"/></a>
+<a href=""><img src="https://github.com/Antikythera-Studios/EpicFight-Files/raw/Wiki-Images/Icons/new_icons/modrinth.png" alt="Modrinth" width="80"/></a>
+
+</div>
