@@ -3,8 +3,7 @@ package guivnf.sanity_renewed.config;
 import guivnf.sanity_renewed.SanityMod;
 import guivnf.sanity_renewed.platform.ConfigPlatform;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
+import net.neoforged.neoforge.common.ModConfigSpec;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 
@@ -25,12 +24,12 @@ public abstract class ConfigManager
 
     protected static final Map<String, ProxyValueEntry<?>> proxies = new HashMap<>();
 
-    public static final List<Pair<?, ForgeConfigSpec>> configList = new ArrayList<>();
-    public static Pair<ConfigDefault, ForgeConfigSpec> def;
+    public static final List<Pair<?, ModConfigSpec>> configList = new ArrayList<>();
+    public static Pair<ConfigDefault, ModConfigSpec> def;
 
     public static void init()
     {
-        configList.add(def = new ForgeConfigSpec.Builder().configure(ConfigDefault::new));
+        configList.add(def = new ModConfigSpec.Builder().configure(ConfigDefault::new));
 
         // sanity
         proxies.put("sanity.positive_multiplier", new ProxyValueEntry<>(() -> getDefault().m_posMul.get(), ConfigManager::noFinalize));
@@ -123,9 +122,8 @@ public abstract class ConfigManager
 
     public static void register()
     {
-        ConfigPlatform.registerConfig(
+        ConfigPlatform.registerCommonConfig(
                 SanityMod.MOD_ID,
-                ModConfig.Type.COMMON,
                 def.getRight(),
                 SanityMod.MOD_ID + File.separator + "default.toml");
         ConfigPlatform.onConfigLoading(SanityMod.MOD_ID, ConfigManager::onConfigLoading);
@@ -273,10 +271,10 @@ public abstract class ConfigManager
             ConfigPassiveBlock block = new ConfigPassiveBlock();
             if (name.startsWith("TAG_") && name.length() > 4)
             {
-                block.m_name = new ResourceLocation(name.substring(4));
+                block.m_name = ResourceLocation.parse(name.substring(4));
                 block.m_isTag = true;
             }
-            else block.m_name = new ResourceLocation(name);
+            else block.m_name = ResourceLocation.parse(name);
             block.m_sanity = sanity;
             block.m_rad = rad;
             block.m_props = props;
@@ -324,7 +322,7 @@ public abstract class ConfigManager
             }
 
             ConfigItem item = new ConfigItem();
-            item.m_name = new ResourceLocation(params[0]);
+            item.m_name = ResourceLocation.parse(params[0]);
             item.m_sanity = sanity;
             item.m_cat = cat;
             list.add(item);
@@ -432,10 +430,10 @@ public abstract class ConfigManager
             ConfigBrokenBlock block = new ConfigBrokenBlock();
             if (params[0].startsWith("TAG_") && params[0].length() > 4)
             {
-                block.m_name = new ResourceLocation(params[0].substring(4));
+                block.m_name = ResourceLocation.parse(params[0].substring(4));
                 block.m_isTag = true;
             }
-            else block.m_name = new ResourceLocation(params[0]);
+            else block.m_name = ResourceLocation.parse(params[0]);
             block.m_sanity = sanity;
             block.m_cat = cat;
             block.m_naturallyGend = naturallyGend;

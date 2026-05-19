@@ -1,18 +1,18 @@
 plugins {
-    id "architectury-plugin" version "${architectury_plugin_version}"
     id "dev.architectury.loom" version "${architectury_loom_version}" apply false
-    id "com.github.johnrengelman.shadow" version "8.1.1" apply false
+    id "architectury-plugin" version "${architectury_plugin_version}"
+    id "com.gradleup.shadow" version "8.3.6" apply false
 }
 
 architectury {
     minecraft = project.mc_version
 }
 
+def mcParts = project.mc_version.split('\\.')
+def mcMinor = mcParts.length > 1 ? mcParts[1] : project.mc_version
+
 allprojects {
     group = project.mod_group
-    // mod_version stores only the minor.patch portion; the major component is derived from mc_version
-    // (e.g. 1.20.1 -> 20). Final version: <mcMinor>.<mod_version>-mc<mc_version>
-    def mcMinor = project.mc_version.tokenize(".").get(1)
     version = "${mcMinor}.${project.mod_version}-mc${project.mc_version}"
 }
 
@@ -26,11 +26,9 @@ subprojects {
 
     repositories {
         maven { url = "https://maven.architectury.dev/" }
-        maven { url = "https://maven.minecraftforge.net/" }
+        maven { url = "https://maven.neoforged.net/releases" }
         maven { url = "https://maven.fabricmc.net/" }
-        // GeckoLib — animated entity renderers (used by InnerEntity)
         maven { url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/" }
-        // Forge Config API Port (Fabric) — Fuzs maven
         maven {
             name = "Fuzs Mod Resources"
             url = "https://raw.githubusercontent.com/Fuzss/modresources/main/maven/"
@@ -45,18 +43,18 @@ subprojects {
     java {
         withSourcesJar()
         toolchain {
-            languageVersion = JavaLanguageVersion.of(17)
+            languageVersion = JavaLanguageVersion.of(21)
         }
     }
 
     tasks.withType(JavaCompile).configureEach {
         options.encoding = "UTF-8"
-        options.release = 17
+        options.release = 21
     }
 
     processResources {
         inputs.property "version", project.version
-        filesMatching("META-INF/mods.toml") {
+        filesMatching("META-INF/neoforge.mods.toml") {
             expand "version": project.version
         }
         filesMatching("fabric.mod.json") {

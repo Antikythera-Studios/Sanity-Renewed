@@ -22,7 +22,7 @@ public class DirtPath implements IPassiveSanitySource
     @Override
     public float get(@NotNull ServerPlayer player, @NotNull ISanity cap, @NotNull ResourceLocation dim)
     {
-        BlockState on = player.getFeetBlockState();
+        BlockState on = player.getBlockStateOn();
         BlockPos bpos = player.blockPosition();
         ServerLevel level = player.serverLevel();
         if (on.is(Blocks.DIRT_PATH) || on.is(BlockTags.WOOL_CARPETS) ||

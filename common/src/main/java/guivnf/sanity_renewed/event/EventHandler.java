@@ -29,8 +29,7 @@ public final class EventHandler
         EntityEvent.LIVING_HURT.register(EventHandler::onLivingHurt);
         EntityEvent.LIVING_DEATH.register(EventHandler::onLivingDeath);
 
-        PlayerEvent.PLAYER_ADVANCEMENT.register((player, advancement) ->
-                SanityProcessor.handlePlayerGotAdvancement(player, advancement));
+        PlayerEvent.PLAYER_ADVANCEMENT.register(SanityProcessor::handlePlayerGotAdvancement);
         PlayerEvent.CHANGE_DIMENSION.register((player, oldDim, newDim) ->
                 SanityProcessor.handlePlayerChangedDimensions(player));
 

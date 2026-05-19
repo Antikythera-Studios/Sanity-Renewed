@@ -23,9 +23,9 @@ import net.minecraft.util.Mth;
 public final class SanityHud
 {
     public static final ResourceLocation INDICATOR_TEX =
-            new ResourceLocation(SanityMod.MOD_ID, "textures/sanity_indicator.png");
+            ResourceLocation.fromNamespaceAndPath(SanityMod.MOD_ID, "textures/sanity_indicator.png");
     public static final ResourceLocation BLOOD_TENDRILS_TEX =
-            new ResourceLocation(SanityMod.MOD_ID, "textures/overlay/blood_tendrils.png");
+            ResourceLocation.fromNamespaceAndPath(SanityMod.MOD_ID, "textures/overlay/blood_tendrils.png");
 
     private static final int ATLAS_W = 256;
     private static final int ATLAS_H = 128;

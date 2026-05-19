@@ -27,7 +27,7 @@ public final class ClientEventHandler
             SanityAmbience.tick();
         });
 
-        ClientGuiEvent.RENDER_HUD.register((graphics, partialTick) ->
-                SanityHud.renderAll(graphics, partialTick));
+        ClientGuiEvent.RENDER_HUD.register((graphics, deltaTracker) ->
+                SanityHud.renderAll(graphics, deltaTracker.getGameTimeDeltaPartialTick(false)));
     }
 }

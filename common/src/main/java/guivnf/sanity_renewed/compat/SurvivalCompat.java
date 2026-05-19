@@ -5,20 +5,10 @@ import dev.architectury.platform.Platform;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Optional;
 import java.util.OptionalInt;
+import java.util.function.Supplier;
 
-/**
- * Reflection-only bridge to ToughAsNails / LegendarySurvivalOverhaul.
- * Returns "unavailable" if neither mod is installed, or if the expected API
- * surface is not present at runtime — callers must treat absence as a no-op.
- *
- * <p>Forge capability classes are only touched inside the LSO init branch,
- * which is gated on Architectury's mod-loaded check. LSO is Forge-only,
- * so this branch never executes on Fabric.</p>
- */
 public final class SurvivalCompat
 {
     public static final int TEMP_UNAVAILABLE = Integer.MIN_VALUE;
@@ -36,15 +26,11 @@ public final class SurvivalCompat
     private static Method tanTempGetLevel;
 
     private static boolean lsoReady;
-    // Both temperature and thirst are read via Forge capabilities on LSO.
-    // getPlayerTargetTemperature() is the *environmental target*, not the body temp,
-    // so reading the actual current body temp via ITemperatureCapability.getTemperatureEnum() is required.
-    private static Object lsoThirstCapability;        // Capability<?> static field value
-    private static Object lsoTemperatureCapability;   // Capability<?> static field value
-    private static Method lsoPlayerGetCapability;     // Player.getCapability(Capability)
-    private static Method lsoLazyResolve;             // LazyOptional.resolve()
-    private static Method lsoThirstGetHydration;      // IThirstCapability.getHydrationLevel()
-    private static Method lsoTempGetEnum;             // ITemperatureCapability.getTemperatureEnum()
+    private static Supplier<?> lsoThirstAttachmentSupplier;
+    private static Supplier<?> lsoTemperatureAttachmentSupplier;
+    private static Method lsoPlayerGetData;
+    private static Method lsoThirstGetHydration;
+    private static Method lsoTempGetEnum;
 
     private static boolean initDone;
 
@@ -87,26 +73,22 @@ public final class SurvivalCompat
         {
             try
             {
-                Class<?> capabilityCls = Class.forName("net.minecraftforge.common.capabilities.Capability");
-                lsoPlayerGetCapability = Player.class.getMethod("getCapability", capabilityCls);
+                Class<?> attachmentType = Class.forName("net.neoforged.neoforge.attachment.AttachmentType");
+                Class<?> attachmentHolder = Class.forName("net.neoforged.neoforge.attachment.IAttachmentHolder");
+                lsoPlayerGetData = attachmentHolder.getMethod("getData", attachmentType);
 
-                Class<?> lazyOpt = Class.forName("net.minecraftforge.common.util.LazyOptional");
-                lsoLazyResolve = lazyOpt.getMethod("resolve");
+                Class<?> modAttachments = Class.forName("sfiomn.legendarysurvivaloverhaul.common.attachments.ModAttachments");
+                lsoTemperatureAttachmentSupplier = (Supplier<?>) modAttachments.getField("TEMPERATURE").get(null);
+                lsoThirstAttachmentSupplier = (Supplier<?>) modAttachments.getField("THIRST").get(null);
 
-                Class<?> thirstProvider = Class.forName("sfiomn.legendarysurvivaloverhaul.common.capabilities.thirst.ThirstProvider");
-                lsoThirstCapability = thirstProvider.getField("THIRST_CAPABILITY").get(null);
+                Class<?> iTempAttach = Class.forName("sfiomn.legendarysurvivaloverhaul.api.temperature.ITemperatureAttachment");
+                lsoTempGetEnum = iTempAttach.getMethod("getTemperatureEnum");
 
-                Class<?> iThirstCap = Class.forName("sfiomn.legendarysurvivaloverhaul.api.thirst.IThirstCapability");
-                lsoThirstGetHydration = iThirstCap.getMethod("getHydrationLevel");
-
-                Class<?> tempProvider = Class.forName("sfiomn.legendarysurvivaloverhaul.common.capabilities.temperature.TemperatureProvider");
-                lsoTemperatureCapability = tempProvider.getField("TEMPERATURE_CAPABILITY").get(null);
-
-                Class<?> iTempCap = Class.forName("sfiomn.legendarysurvivaloverhaul.api.temperature.ITemperatureCapability");
-                lsoTempGetEnum = iTempCap.getMethod("getTemperatureEnum");
+                Class<?> iThirstAttach = Class.forName("sfiomn.legendarysurvivaloverhaul.api.thirst.IThirstAttachment");
+                lsoThirstGetHydration = iThirstAttach.getMethod("getHydrationLevel");
 
                 lsoReady = true;
-                SanityMod.LOGGER.info("Sanity: LegendarySurvivalOverhaul compat enabled");
+                SanityMod.LOGGER.info("Sanity: LegendarySurvivalOverhaul compat enabled (NeoForge attachments)");
             }
             catch (Throwable t)
             {
@@ -115,7 +97,6 @@ public final class SurvivalCompat
         }
     }
 
-    /** Hydration remaining (0..20), or empty if no compat mod provides the data. */
     public static OptionalInt getThirst(ServerPlayer player)
     {
         initIfNeeded();
@@ -136,14 +117,13 @@ public final class SurvivalCompat
         {
             try
             {
-                Object lazy = lsoPlayerGetCapability.invoke(player, lsoThirstCapability);
-                if (lazy != null)
+                Object attachmentType = lsoThirstAttachmentSupplier.get();
+                if (attachmentType != null)
                 {
-                    Object optObj = lsoLazyResolve.invoke(lazy);
-                    if (optObj instanceof Optional<?> opt && opt.isPresent())
+                    Object thirstAttach = lsoPlayerGetData.invoke(player, attachmentType);
+                    if (thirstAttach != null)
                     {
-                        Object cap = opt.get();
-                        Object v = lsoThirstGetHydration.invoke(cap);
+                        Object v = lsoThirstGetHydration.invoke(thirstAttach);
                         if (v instanceof Integer i) return OptionalInt.of(i);
                     }
                 }
@@ -153,7 +133,6 @@ public final class SurvivalCompat
         return OptionalInt.empty();
     }
 
-    /** {@link #TEMP_HOT}, {@link #TEMP_NEUTRAL}, {@link #TEMP_COLD}, or {@link #TEMP_UNAVAILABLE}. */
     public static int getTemperatureLevel(ServerPlayer player)
     {
         initIfNeeded();
@@ -167,9 +146,6 @@ public final class SurvivalCompat
                     Object lvl = tanTempGetLevel.invoke(data);
                     if (lvl != null)
                     {
-                        // TAN's TemperatureLevel ladder is ICY/COLD/NEUTRAL/WARM/HOT.
-                        // Only the extremes (ICY / HOT) count as "extreme" for sanity purposes;
-                        // mild deviations (COLD / WARM) are normal and ignored.
                         return switch (lvl.toString())
                         {
                             case "ICY" -> TEMP_COLD;
@@ -185,19 +161,15 @@ public final class SurvivalCompat
         {
             try
             {
-                Object lazy = lsoPlayerGetCapability.invoke(player, lsoTemperatureCapability);
-                if (lazy != null)
+                Object attachmentType = lsoTemperatureAttachmentSupplier.get();
+                if (attachmentType != null)
                 {
-                    Object optObj = lsoLazyResolve.invoke(lazy);
-                    if (optObj instanceof Optional<?> opt && opt.isPresent())
+                    Object tempAttach = lsoPlayerGetData.invoke(player, attachmentType);
+                    if (tempAttach != null)
                     {
-                        Object cap = opt.get();
-                        Object lvl = lsoTempGetEnum.invoke(cap);
+                        Object lvl = lsoTempGetEnum.invoke(tempAttach);
                         if (lvl != null)
                         {
-                            // LSO body-temperature ladder: FROSTBITE / COLD / NORMAL / HOT / HEAT_STROKE.
-                            // Only FROSTBITE and HEAT_STROKE are extreme — being in a cold/hot biome
-                            // or near warm blocks only nudges the target, not the body temp.
                             return switch (lvl.toString())
                             {
                                 case "FROSTBITE" -> TEMP_COLD;

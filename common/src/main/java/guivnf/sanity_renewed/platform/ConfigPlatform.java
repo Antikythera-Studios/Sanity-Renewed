@@ -1,8 +1,7 @@
 package guivnf.sanity_renewed.platform;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.fml.config.ModConfig;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.nio.file.Path;
 
@@ -15,7 +14,7 @@ public final class ConfigPlatform
     private ConfigPlatform() {}
 
     @ExpectPlatform
-    public static void registerConfig(String modId, ModConfig.Type type, ForgeConfigSpec spec, String fileName)
+    public static void registerCommonConfig(String modId, ModConfigSpec spec, String fileName)
     {
         throw new AssertionError();
     }

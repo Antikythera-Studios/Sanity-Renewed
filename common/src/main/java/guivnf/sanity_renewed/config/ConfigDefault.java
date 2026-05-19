@@ -1,11 +1,11 @@
 package guivnf.sanity_renewed.config;
 
-import net.minecraftforge.common.ForgeConfigSpec;
-import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
-import net.minecraftforge.common.ForgeConfigSpec.BooleanValue;
-import net.minecraftforge.common.ForgeConfigSpec.DoubleValue;
-import net.minecraftforge.common.ForgeConfigSpec.IntValue;
-import net.minecraftforge.common.ForgeConfigSpec.EnumValue;
+import net.neoforged.neoforge.common.ModConfigSpec;
+import net.neoforged.neoforge.common.ModConfigSpec.ConfigValue;
+import net.neoforged.neoforge.common.ModConfigSpec.BooleanValue;
+import net.neoforged.neoforge.common.ModConfigSpec.DoubleValue;
+import net.neoforged.neoforge.common.ModConfigSpec.IntValue;
+import net.neoforged.neoforge.common.ModConfigSpec.EnumValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +89,7 @@ public class ConfigDefault
     public final BooleanValue m_playSounds;
     public final DoubleValue m_insanityVolume;
 
-    public ConfigDefault(ForgeConfigSpec.Builder builder)
+    public ConfigDefault(ModConfigSpec.Builder builder)
     {
         builder.comment(
                 "Sanity configuration",

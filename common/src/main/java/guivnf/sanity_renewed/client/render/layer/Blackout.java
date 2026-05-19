@@ -30,7 +30,7 @@ public final class Blackout
 
     private static ResourceLocation tex(String name)
     {
-        return new ResourceLocation(SanityMod.MOD_ID, "textures/entity/" + name);
+        return ResourceLocation.fromNamespaceAndPath(SanityMod.MOD_ID, "textures/entity/" + name);
     }
 
     public static boolean isLocalPlayerInsane()

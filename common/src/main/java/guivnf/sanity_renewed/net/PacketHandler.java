@@ -6,14 +6,14 @@ import guivnf.sanity_renewed.capability.SanityHolder;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.utils.Env;
 import io.netty.buffer.Unpooled;
-import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 
 public final class PacketHandler
 {
-    public static final ResourceLocation SANITY_SYNC = new ResourceLocation(SanityMod.MOD_ID, "sanity_sync");
+    public static final ResourceLocation SANITY_SYNC = ResourceLocation.fromNamespaceAndPath(SanityMod.MOD_ID, "sanity_sync");
 
     private PacketHandler() {}
 
@@ -39,7 +39,7 @@ public final class PacketHandler
 
     public static void sendSanityToPlayer(ServerPlayer player, Sanity sanity)
     {
-        FriendlyByteBuf buf = new FriendlyByteBuf(Unpooled.buffer());
+        RegistryFriendlyByteBuf buf = new RegistryFriendlyByteBuf(Unpooled.buffer(), player.registryAccess());
         sanity.serialize(buf);
         NetworkManager.sendToPlayer(player, SANITY_SYNC, buf);
     }

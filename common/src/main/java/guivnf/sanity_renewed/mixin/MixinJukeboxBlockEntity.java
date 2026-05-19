@@ -1,31 +1,39 @@
 package guivnf.sanity_renewed.mixin;
 
 import guivnf.sanity_renewed.passive.Jukebox;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.entity.JukeboxBlockEntity;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.world.item.JukeboxSong;
+import net.minecraft.world.item.JukeboxSongPlayer;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Shadow;
 
-@Mixin(JukeboxBlockEntity.class)
+@Mixin(JukeboxSongPlayer.class)
 public abstract class MixinJukeboxBlockEntity
 {
-    @Inject(method = "startPlaying", at = @At("TAIL"))
-    private void sanity_renewed$startPlaying(CallbackInfo ci)
+    @Shadow
+    @Final
+    private BlockPos blockPos;
+
+    @Inject(method = "play(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/core/Holder;)V",
+            at = @At("TAIL"))
+    private void sanity_renewed$play(LevelAccessor level, Holder<JukeboxSong> song, CallbackInfo ci)
     {
-        JukeboxBlockEntity self = (JukeboxBlockEntity)(Object)this;
-        Level level = self.getLevel();
         if (level != null && !level.isClientSide())
-            Jukebox.handleJukeboxStartedPlaying(self.getBlockPos(), self.getItem(0));
+            Jukebox.handleJukeboxStartedPlaying(blockPos, song);
     }
 
-    @Inject(method = "stopPlaying", at = @At("HEAD"))
-    private void sanity_renewed$stopPlaying(CallbackInfo ci)
+    @Inject(method = "stop(Lnet/minecraft/world/level/LevelAccessor;Lnet/minecraft/world/level/block/state/BlockState;)V",
+            at = @At("HEAD"))
+    private void sanity_renewed$stop(LevelAccessor level, BlockState state, CallbackInfo ci)
     {
-        JukeboxBlockEntity self = (JukeboxBlockEntity)(Object)this;
-        Level level = self.getLevel();
         if (level != null && !level.isClientSide())
-            Jukebox.handleJukeboxStoppedPlaying(self.getBlockPos(), self.getItem(0));
+            Jukebox.handleJukeboxStoppedPlaying(blockPos);
     }
 }

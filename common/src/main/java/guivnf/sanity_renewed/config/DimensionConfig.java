@@ -25,7 +25,7 @@ public abstract class DimensionConfig
 
     private static void unloadDimension(String dim, Config config)
     {
-        ResourceLocation name = new ResourceLocation(dim);
+        ResourceLocation name = ResourceLocation.parse(dim);
         for (Map.Entry<String, Map<ResourceLocation, Object>> entry : configToDimStored.entrySet())
         {
             String key = entry.getKey();

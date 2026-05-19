@@ -29,7 +29,7 @@ import guivnf.sanity_renewed.passive.PlayerCompany;
 import guivnf.sanity_renewed.passive.TemperatureExtreme;
 import guivnf.sanity_renewed.passive.Thirsty;
 import guivnf.sanity_renewed.util.MathHelper;
-import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
@@ -106,7 +106,7 @@ public final class SanityProcessor
         {
             passive -= .00005 * ConfigProxy.getPosMul(dim);
             if (garlandTimer <= 0)
-                headItem.hurtAndBreak(player.isInWaterOrRain() ? 2 : 1, player, ent -> {});
+                headItem.hurtAndBreak(player.isInWaterOrRain() ? 2 : 1, player, EquipmentSlot.HEAD);
         }
         if (garlandTimer <= 0)
             garlandTimer = MAX_GARLAND_TIMER;
@@ -189,7 +189,7 @@ public final class SanityProcessor
         List<Player> list = new ArrayList<>();
         for (Player player : levelIn.getEntitiesOfClass(
                 Player.class,
-                new AABB(center.offset(blockRadius, blockRadius, blockRadius), center.offset(-blockRadius, -blockRadius, -blockRadius))))
+                AABB.encapsulatingFullBlocks(center.offset(blockRadius, blockRadius, blockRadius), center.offset(-blockRadius, -blockRadius, -blockRadius))))
         {
             Sanity s = SanityHolder.get(player);
             if (s != null && s.getSanity() >= SANITY_TARGET_THRESHOLD)
@@ -287,10 +287,11 @@ public final class SanityProcessor
             s.setEnderManAngerTimer(100);
     }
 
-    public static void handlePlayerGotAdvancement(ServerPlayer player, Advancement adv)
+    public static void handlePlayerGotAdvancement(ServerPlayer player, AdvancementHolder holder)
     {
         if (player == null || player.isCreative() || player.isSpectator()) return;
-        if (adv.getDisplay() == null || !adv.getDisplay().shouldAnnounceChat()) return;
+        var display = holder.value().display();
+        if (display.isEmpty() || !display.get().shouldAnnounceChat()) return;
         Sanity s = SanityHolder.get(player);
         if (s == null) return;
         addSanity(s, ConfigProxy.getAdvancement(dimOf(player)), player);
@@ -327,20 +328,20 @@ public final class SanityProcessor
                 ActiveSanitySources.EATING,
                 ConfigProxy::getEatingCooldown,
                 dim -> {
-                    var fp = itemStack.getItem().getFoodProperties();
+                    var fp = itemStack.get(net.minecraft.core.component.DataComponents.FOOD);
                     if (fp == null) return 0f;
-                    float base = fp.getNutrition() * ConfigProxy.getEating(dim);
+                    float base = fp.nutrition() * ConfigProxy.getEating(dim);
                     return isUnhealthyFood(fp) ? -base : base;
                 });
     }
 
     private static boolean isUnhealthyFood(net.minecraft.world.food.FoodProperties fp)
     {
-        for (var pair : fp.getEffects())
+        for (var pair : fp.effects())
         {
-            var effect = pair.getFirst();
+            var effect = pair.effect();
             if (effect == null) continue;
-            if (effect.getEffect().getCategory() == net.minecraft.world.effect.MobEffectCategory.HARMFUL)
+            if (effect.getEffect().value().getCategory() == net.minecraft.world.effect.MobEffectCategory.HARMFUL)
                 return true;
         }
         return false;
@@ -387,7 +388,7 @@ public final class SanityProcessor
             return;
         }
 
-        if (itemStack.isEdible())
+        if (itemStack.has(net.minecraft.core.component.DataComponents.FOOD))
             handlePlayerAte(player, itemStack);
     }
 

@@ -35,6 +35,6 @@ public final class ItemRegistry
 
     public static ResourceLocation id(String path)
     {
-        return new ResourceLocation(SanityMod.MOD_ID, path);
+        return ResourceLocation.fromNamespaceAndPath(SanityMod.MOD_ID, path);
     }
 }

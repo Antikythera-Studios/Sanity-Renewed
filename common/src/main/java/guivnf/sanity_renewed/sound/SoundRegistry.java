@@ -22,7 +22,7 @@ public final class SoundRegistry
 
     private static RegistrySupplier<SoundEvent> register(String name)
     {
-        ResourceLocation id = new ResourceLocation(SanityMod.MOD_ID, name);
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(SanityMod.MOD_ID, name);
         return SOUNDS.register(name, () -> SoundEvent.createVariableRangeEvent(id));
     }
 

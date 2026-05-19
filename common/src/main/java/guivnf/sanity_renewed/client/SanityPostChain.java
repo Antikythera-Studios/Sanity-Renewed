@@ -22,7 +22,7 @@ import java.io.IOException;
  */
 public final class SanityPostChain
 {
-    private static final ResourceLocation CHAIN_ID = new ResourceLocation(SanityMod.MOD_ID, "shaders/post/insanity.json");
+    private static final ResourceLocation CHAIN_ID = ResourceLocation.fromNamespaceAndPath(SanityMod.MOD_ID, "shaders/post/insanity.json");
     private static final float SANITY_FADE_START = .4f;
     private static final float SANITY_FADE_END   = .8f;
 
