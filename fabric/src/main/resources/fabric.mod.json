@@ -4,6 +4,7 @@
   "version": "${version}",
   "name": "Sanity: Renewed",
   "description": "Brings the sanity mechanic from Don't Starve into Minecraft",
+  "icon": "assets/sanity_renewed/icon.png",
   "authors": ["croissantnova", "guivnf"],
   "contact": {
     "issues": "https://github.com/croissantnova/SanityDescentIntoMadness/issues"
