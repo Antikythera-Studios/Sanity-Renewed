@@ -15,7 +15,7 @@ public class Sanity implements ISanity, IPassiveSanity, IPersistentSanity
     private int m_emAngerTimer;
     private float m_sanityVal;
     private float m_passive;
-    private Vec3 m_stuckMultiplier;
+    private Vec3 m_stuckMultiplier = Vec3.ZERO;
 
     private final int[] m_cds = new int[ActiveSanitySources.AMOUNT];
     private final Map<Integer, Integer> m_itemCds = new HashMap<>();
