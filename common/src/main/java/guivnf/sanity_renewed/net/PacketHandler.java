@@ -17,7 +17,7 @@ public final class PacketHandler
 
     private PacketHandler() {}
 
-    public static void init()
+    public static void initClient()
     {
         NetworkManager.registerReceiver(NetworkManager.Side.S2C, SANITY_SYNC, (buf, ctx) ->
         {

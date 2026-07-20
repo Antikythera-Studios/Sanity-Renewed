@@ -27,13 +27,13 @@ public final class SanityMod
         ItemRegistry.init();
         EntityRegistry.init();
         EntityRegistry.registerAttributes();
-        guivnf.sanity_renewed.net.PacketHandler.init();
         guivnf.sanity_renewed.event.EventHandler.register();
         LOGGER.info("[{}] common init complete", MOD_ID);
     }
 
     public static void clientInit()
     {
+        guivnf.sanity_renewed.net.PacketHandler.initClient();
         dev.architectury.registry.client.level.entity.EntityRendererRegistry.register(
                 EntityRegistry.ROTTING_STALKER,
                 guivnf.sanity_renewed.client.render.RendererRottingStalker::new);
