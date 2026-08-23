@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## 21.1.2 - 2026-08-23
+
+### Fixed
+  - Players being disconnected from dedicated servers.
+  - Garland being uncraftable, and its recipe not showing up in recipe viewers such as JEI.
+  - Garland never losing durability, and wearing out too fast on servers.
+  - Farmland trampling, fishing, lightning strikes and shearing not affecting sanity.
+  - Cooldowns being ignored by sanity sources such as eating, breeding and trading.
+  - Cooldowns for broken blocks not being saved.
+  - Shadow creatures staying aggressive after sanity was restored.
+
+### Changed
+  - Garland is crafted from small flowers again, and can no longer be repaired.
+
+---
+
 ## 21.1.1 - 2026-07-19
 
 ### Added

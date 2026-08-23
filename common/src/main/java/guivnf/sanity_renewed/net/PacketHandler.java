@@ -4,6 +4,7 @@ import guivnf.sanity_renewed.SanityMod;
 import guivnf.sanity_renewed.capability.Sanity;
 import guivnf.sanity_renewed.capability.SanityHolder;
 import dev.architectury.networking.NetworkManager;
+import dev.architectury.platform.Platform;
 import dev.architectury.utils.Env;
 import io.netty.buffer.Unpooled;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -16,6 +17,12 @@ public final class PacketHandler
     public static final ResourceLocation SANITY_SYNC = ResourceLocation.fromNamespaceAndPath(SanityMod.MOD_ID, "sanity_sync");
 
     private PacketHandler() {}
+
+    public static void init()
+    {
+        if (Platform.getEnvironment() == Env.SERVER)
+            NetworkManager.registerS2CPayloadType(SANITY_SYNC);
+    }
 
     public static void initClient()
     {

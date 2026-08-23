@@ -16,7 +16,13 @@ public final class GarlandItem extends ArmorItem
     public GarlandItem()
     {
         super(FlowerArmorMaterial.HOLDER, ArmorItem.Type.HELMET,
-                new Properties().stacksTo(1));
+                new Properties().stacksTo(1).durability(150));
+    }
+
+    @Override
+    public boolean isValidRepairItem(@NotNull ItemStack toRepair, @NotNull ItemStack repair)
+    {
+        return false;
     }
 
     @Override

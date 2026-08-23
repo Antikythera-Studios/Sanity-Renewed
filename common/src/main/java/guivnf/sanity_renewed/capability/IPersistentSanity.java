@@ -16,6 +16,10 @@ public interface IPersistentSanity
 
     int getEnderManAngerTimer();
 
+    void setGarlandTimer(int value);
+
+    int getGarlandTimer();
+
     void setStuckMotionMultiplier(Vec3 multiplier);
 
     Vec3 getStuckMotionMultiplier();

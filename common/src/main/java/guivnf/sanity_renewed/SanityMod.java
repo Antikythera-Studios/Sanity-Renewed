@@ -27,6 +27,7 @@ public final class SanityMod
         ItemRegistry.init();
         EntityRegistry.init();
         EntityRegistry.registerAttributes();
+        guivnf.sanity_renewed.net.PacketHandler.init();
         guivnf.sanity_renewed.event.EventHandler.register();
         LOGGER.info("[{}] common init complete", MOD_ID);
     }

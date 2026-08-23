@@ -7,11 +7,11 @@
   ],
   "key": {
     "x": {
-      "tag": "minecraft:flowers"
+      "tag": "minecraft:small_flowers"
     }
   },
   "result": {
-    "item": "sanity_renewed:garland",
+    "id": "sanity_renewed:garland",
     "count": 1
   }
 }

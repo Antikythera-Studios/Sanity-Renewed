@@ -13,6 +13,7 @@ public class Sanity implements ISanity, IPassiveSanity, IPersistentSanity
 {
     private boolean m_dirty = true;
     private int m_emAngerTimer;
+    private int m_garlandTimer;
     private float m_sanityVal;
     private float m_passive;
     private Vec3 m_stuckMultiplier = Vec3.ZERO;
@@ -30,6 +31,7 @@ public class Sanity implements ISanity, IPassiveSanity, IPersistentSanity
     {
         tag.putFloat("sanity.sanity", m_sanityVal);
         tag.putInt("sanity.ender_man_anger_timer", m_emAngerTimer);
+        tag.putInt("sanity.garland_timer", m_garlandTimer);
 
         // TODO: do lazy serialization instead
         tag.putInt("sanity.sleeping", m_cds[ActiveSanitySources.SLEEPING]);
@@ -50,6 +52,7 @@ public class Sanity implements ISanity, IPassiveSanity, IPersistentSanity
     {
         setSanity(tag.getFloat("sanity.sanity"));
         setEnderManAngerTimer(tag.getInt("sanity.ender_man_anger_timer"));
+        setGarlandTimer(tag.getInt("sanity.garland_timer"));
 
         m_cds[ActiveSanitySources.SLEEPING] = tag.getInt("sanity.sleeping");
         m_cds[ActiveSanitySources.SPAWNING_BABY_CHICKEN] = tag.getInt("sanity.baby_chicken_spawn");
@@ -143,6 +146,18 @@ public class Sanity implements ISanity, IPassiveSanity, IPersistentSanity
     }
 
     @Override
+    public void setGarlandTimer(int value)
+    {
+        m_garlandTimer = value;
+    }
+
+    @Override
+    public int getGarlandTimer()
+    {
+        return m_garlandTimer;
+    }
+
+    @Override
     public void setStuckMotionMultiplier(Vec3 multiplier)
     {
         m_stuckMultiplier = multiplier;
@@ -210,7 +225,7 @@ public class Sanity implements ISanity, IPassiveSanity, IPersistentSanity
 
         for (long blockCd : brokenBlocksCds)
         {
-            m_itemCds.put((int)(blockCd >> Long.SIZE / 2), (int)blockCd);
+            m_brokenBlocksCds.put((int)(blockCd >> Long.SIZE / 2), (int)blockCd);
         }
     }
 }
