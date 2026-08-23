@@ -10,6 +10,8 @@
     "MixinCow",
     "MixinEnderMan",
     "MixinEntity",
+    "MixinFarmBlock",
+    "MixinFishingHook",
     "MixinFlowerPotBlock",
     "MixinJukeboxBlockEntity",
     "MixinLivingEntity",

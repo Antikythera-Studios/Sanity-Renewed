@@ -1,10 +1,14 @@
 package guivnf.sanity_renewed.mixin;
 
+import guivnf.sanity_renewed.SanityProcessor;
 import guivnf.sanity_renewed.capability.Sanity;
 import guivnf.sanity_renewed.capability.SanityHolder;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -30,5 +34,20 @@ public abstract class MixinEntity
             if (s != null)
                 s.setStuckMotionMultiplier(this.stuckSpeedMultiplier);
         }
+    }
+
+    @Inject(method = "thunderHit", at = @At("HEAD"))
+    private void sanity_renewed$thunderHit(ServerLevel level, LightningBolt bolt, CallbackInfo ci)
+    {
+        if ((Object) this instanceof ServerPlayer sp)
+            SanityProcessor.handlePlayerStruckByLightning(sp);
+    }
+
+    @Inject(method = "gameEvent(Lnet/minecraft/world/level/gameevent/GameEvent;Lnet/minecraft/world/entity/Entity;)V",
+            at = @At("HEAD"))
+    private void sanity_renewed$gameEvent(GameEvent event, Entity source, CallbackInfo ci)
+    {
+        if (event == GameEvent.SHEAR && source instanceof ServerPlayer sp)
+            SanityProcessor.handlePlayerUsedShears(sp);
     }
 }

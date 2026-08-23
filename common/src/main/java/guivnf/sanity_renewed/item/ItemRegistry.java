@@ -31,6 +31,7 @@ public final class ItemRegistry
     {
         ITEMS.register();
         TABS.register();
+        CreativeTabRegistry.append(MAIN_TAB, GARLAND);
     }
 
     public static ResourceLocation id(String path)

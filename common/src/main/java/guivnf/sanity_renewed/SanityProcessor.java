@@ -58,7 +58,6 @@ import java.util.function.Function;
 
 public final class SanityProcessor
 {
-    private static int garlandTimer;
     private static final RandomSource RAND = RandomSource.create();
 
     public static final int MAX_GARLAND_TIMER = 60;
@@ -100,16 +99,19 @@ public final class SanityProcessor
             passive += val;
         }
 
-        garlandTimer--;
         ItemStack headItem = player.getItemBySlot(EquipmentSlot.HEAD);
-        if (headItem.is(ItemRegistry.GARLAND.get()))
+        if (headItem.is(ItemRegistry.GARLAND.get()) && sanity instanceof IPersistentSanity ps)
         {
             passive -= .00005 * ConfigProxy.getPosMul(dim);
-            if (garlandTimer <= 0)
+
+            int timer = ps.getGarlandTimer() - 1;
+            if (timer <= 0)
+            {
                 headItem.hurtAndBreak(player.isInWaterOrRain() ? 2 : 1, player, ent -> {});
+                timer = MAX_GARLAND_TIMER;
+            }
+            ps.setGarlandTimer(timer);
         }
-        if (garlandTimer <= 0)
-            garlandTimer = MAX_GARLAND_TIMER;
 
         return passive;
     }
@@ -236,10 +238,18 @@ public final class SanityProcessor
         if (s == null) return;
 
         ResourceLocation dim = dimOf(player);
-        addSanity(s, sanitySupplier.apply(dim), player);
         int cd = cdSupplier.apply(dim);
-        if (cd > 0)
-            s.getActiveSourcesCooldowns()[id] = cd;
+
+        if (cd <= 0)
+        {
+            addSanity(s, sanitySupplier.apply(dim), player);
+            return;
+        }
+
+        int[] cds = s.getActiveSourcesCooldowns();
+        int timePassed = cd - cds[id];
+        addSanity(s, sanitySupplier.apply(dim) * MathHelper.clampNorm((float) timePassed / cd), player);
+        cds[id] = cd;
     }
 
     public static void handlePlayerSlept(ServerLevel level)

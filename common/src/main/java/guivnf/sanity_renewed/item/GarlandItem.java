@@ -21,6 +21,12 @@ public final class GarlandItem extends ArmorItem
     }
 
     @Override
+    public boolean isValidRepairItem(@NotNull ItemStack toRepair, @NotNull ItemStack repair)
+    {
+        return false;
+    }
+
+    @Override
     public void appendHoverText(@NotNull ItemStack stack,
                                 @Nullable Level level,
                                 @NotNull List<Component> tooltip,

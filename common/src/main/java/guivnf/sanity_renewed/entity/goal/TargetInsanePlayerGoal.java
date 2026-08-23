@@ -1,6 +1,8 @@
 package guivnf.sanity_renewed.entity.goal;
 
 import guivnf.sanity_renewed.SanityProcessor;
+import guivnf.sanity_renewed.capability.Sanity;
+import guivnf.sanity_renewed.capability.SanityHolder;
 import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -41,6 +43,19 @@ public class TargetInsanePlayerGoal extends TargetGoal
     }
 
     @Override
+    public boolean canContinueToUse()
+    {
+        if (!(mob.getTarget() instanceof Player player) || player.isCreative() || player.isSpectator())
+            return false;
+
+        Sanity s = SanityHolder.get(player);
+        if (s == null || s.getSanity() < getThreshold())
+            return false;
+
+        return super.canContinueToUse();
+    }
+
+    @Override
     public void start()
     {
         Player target = m_insanePlayer;
@@ -59,6 +74,11 @@ public class TargetInsanePlayerGoal extends TargetGoal
         m_alertSameType = true;
         m_toIgnoreAlert = toIgnore;
         return this;
+    }
+
+    private float getThreshold()
+    {
+        return m_sanityThreshold < 0f ? SanityProcessor.SANITY_TARGET_THRESHOLD : m_sanityThreshold;
     }
 
     private Player getMostInsanePlayer()

@@ -14,7 +14,7 @@ public final class FlowerArmorMaterial implements ArmorMaterial
     @Override
     public int getDurabilityForType(ArmorItem.@NotNull Type type)
     {
-        return 0;
+        return 150;
     }
 
     @Override
