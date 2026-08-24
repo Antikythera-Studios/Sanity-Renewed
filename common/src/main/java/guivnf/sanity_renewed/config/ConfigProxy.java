@@ -141,11 +141,6 @@ public abstract class ConfigProxy
         return ConfigManager.proxyd2f("sanity.active.sleeping", dim);
     }
 
-    public static int getSleepingCooldown(ResourceLocation dim)
-    {
-        return ConfigManager.proxyd2i("sanity.active.sleeping_cd", dim);
-    }
-
     public static float getHurtRatio(ResourceLocation dim)
     {
         return ConfigManager.proxyd2f("sanity.active.hurt_ratio", dim);
@@ -229,6 +224,11 @@ public abstract class ConfigProxy
     public static float getFarmlandTrample(ResourceLocation dim)
     {
         return ConfigManager.proxyd2f("sanity.active.farmland_trample", dim);
+    }
+
+    public static float getInnerEntityKill(ResourceLocation dim)
+    {
+        return ConfigManager.proxyd2f("sanity.active.inner_entity_kill", dim);
     }
 
     public static float getPottingFlower(ResourceLocation dim)

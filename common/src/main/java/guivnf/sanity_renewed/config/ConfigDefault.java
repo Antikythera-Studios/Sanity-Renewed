@@ -41,7 +41,6 @@ public class ConfigDefault
     public final ConfigValue<List<? extends String>> m_passiveBlocks;
 
     public final DoubleValue m_sleeping;
-    public final DoubleValue m_sleepingCd;
     public final DoubleValue m_hurtRatio;
     public final DoubleValue m_babyChickenSpawning;
     public final DoubleValue m_babyChickenSpawningCd;
@@ -59,6 +58,7 @@ public class ConfigDefault
     public final DoubleValue m_fishing;
     public final DoubleValue m_fishingCd;
     public final DoubleValue m_farmlandTrample;
+    public final DoubleValue m_innerEntityKill;
     public final DoubleValue m_pottingFlower;
     public final DoubleValue m_pottingFlowerCd;
     public final DoubleValue m_changedDimension;
@@ -200,11 +200,8 @@ public class ConfigDefault
         builder.comment("Configuration for active sanity sources").push("active");
 
         m_sleeping = builder
-                .comment("Sleeping restores this amount of sanity")
+                .comment("Sleeping through the night restores this amount of sanity")
                 .defineInRange("sleeping", 50.0, -100.0, 100.0);
-        m_sleepingCd = builder
-                .comment("Sleeping cooldown (see notes above), real time in seconds")
-                .defineInRange("sleeping_cd", 1200.0, 0.0, Float.MAX_VALUE);
         m_hurtRatio = builder
                 .comment("Players will gain sanity based on the damage they take from any sources with the ratio of 1 to this number")
                 .defineInRange("hurt_ratio", -1.0, -100.0, 100.0);
@@ -258,6 +255,9 @@ public class ConfigDefault
         m_farmlandTrample = builder
                 .comment("Trampling a farmland gives this amount of sanity")
                 .defineInRange("farmland_trample", -2.0, -100.0, 100.0);
+        m_innerEntityKill = builder
+                .comment("Killing an inner entity gives this amount of sanity")
+                .defineInRange("inner_entity_kill", 3.0, -100.0, 100.0);
         m_pottingFlower = builder
                 .comment("Potting a flower gives this amount of sanity")
                 .defineInRange("potting_flower", 4.0, -100.0, 100.0);

@@ -1,5 +1,6 @@
 package guivnf.sanity_renewed.entity;
 
+import guivnf.sanity_renewed.entity.goal.HurtByInsanePlayerGoal;
 import guivnf.sanity_renewed.entity.goal.TargetInsanePlayerGoal;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -8,7 +9,6 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WaterAvoidingRandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.level.Level;
 import software.bernie.geckolib.animatable.GeoEntity;
@@ -37,7 +37,7 @@ public class RottingStalker extends InnerEntity implements GeoEntity
         this.goalSelector.addGoal(2, new RandomLookAroundGoal(this));
         this.goalSelector.addGoal(3, new WaterAvoidingRandomStrollGoal(this, .4d));
         this.targetSelector.addGoal(0, new TargetInsanePlayerGoal(this, false));
-        this.targetSelector.addGoal(1, new HurtByTargetGoal(this));
+        this.targetSelector.addGoal(1, new HurtByInsanePlayerGoal(this));
 
         super.registerGoals();
     }
@@ -68,7 +68,7 @@ public class RottingStalker extends InnerEntity implements GeoEntity
     public static AttributeSupplier.Builder buildAttributes()
     {
         return Monster.createMonsterAttributes()
-                .add(Attributes.MAX_HEALTH, 500.0d)
+                .add(Attributes.MAX_HEALTH, 10.0d)
                 .add(Attributes.FOLLOW_RANGE, 128.0d)
                 .add(Attributes.ATTACK_DAMAGE, 8.0d)
                 .add(Attributes.MOVEMENT_SPEED, 0.42d);

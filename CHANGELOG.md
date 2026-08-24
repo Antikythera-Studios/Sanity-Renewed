@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## 20.1.3 - 2026-08-24
+
+### Added
+  - Killing a shadow creature restores a small amount of sanity.
+  - Shadow creatures show up more often the more of them you kill, easing off again after staying sane for a while.
+
+### Fixed
+  - Shadow creatures chasing forever after being hit, even once sanity was restored.
+  - Shadow creatures draining sanity while completely invisible.
+  - Looking at an enderman not draining sanity on Fabric.
+  - Sleeping not restoring sanity alongside mods that change how sleeping works.
+
+### Changed
+  - Shadow creatures are much weaker.
+  - Shadow creatures no longer push players, and can only be hit once they turn hostile.
+
+### Removed
+  - Sleeping cooldown; sleeping through the night always restores sanity.
+
+---
+
 ## 20.1.2 - 2026-08-23
 
 ### Fixed

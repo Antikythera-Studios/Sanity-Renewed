@@ -13,6 +13,6 @@ public abstract class MixinServerLevel
     @Inject(method = "wakeUpAllPlayers", at = @At("HEAD"))
     private void sanity_renewed$wakeUpAllPlayers(CallbackInfo ci)
     {
-        SanityProcessor.handlePlayerSlept((ServerLevel)(Object)this);
+        SanityProcessor.handleLevelSleepCompleted((ServerLevel)(Object)this);
     }
 }

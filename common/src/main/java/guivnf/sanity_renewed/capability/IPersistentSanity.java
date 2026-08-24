@@ -20,6 +20,14 @@ public interface IPersistentSanity
 
     int getGarlandTimer();
 
+    void setInnerEntityKills(int value);
+
+    int getInnerEntityKills();
+
+    void setInnerEntityKillDecay(int value);
+
+    int getInnerEntityKillDecay();
+
     void setStuckMotionMultiplier(Vec3 multiplier);
 
     Vec3 getStuckMotionMultiplier();
