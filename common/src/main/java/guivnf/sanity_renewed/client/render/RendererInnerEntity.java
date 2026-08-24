@@ -1,9 +1,6 @@
 package guivnf.sanity_renewed.client.render;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import guivnf.sanity_renewed.capability.Sanity;
-import guivnf.sanity_renewed.capability.SanityHolder;
-import guivnf.sanity_renewed.config.ConfigProxy;
 import guivnf.sanity_renewed.entity.InnerEntity;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -26,19 +23,7 @@ public class RendererInnerEntity<T extends InnerEntity & GeoAnimatable> extends 
 
     public boolean shouldRender(T entity)
     {
-        if (m_mc.player == null || entity == null)
-            return false;
-
-        if (ConfigProxy.getSaneSeeInnerEntities(m_mc.player.level().dimension().location())
-                || m_mc.player.isCreative() || m_mc.player.isSpectator())
-            return true;
-
-        if (entity.getData().getPlayerTargetUUID() != null
-                && entity.getData().getPlayerTargetUUID().equals(m_mc.player.getUUID()))
-            return true;
-
-        Sanity s = SanityHolder.get(m_mc.player);
-        return s != null && s.getSanity() >= .6f;
+        return entity != null && m_mc.player != null && entity.isVisibleTo(m_mc.player);
     }
 
     @Override

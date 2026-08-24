@@ -63,7 +63,6 @@ public abstract class ConfigManager
 
         //sanity.active
         proxies.put("sanity.active.sleeping", new ProxyValueEntry<>(() -> getDefault().m_sleeping.get(), ConfigManager::finalizeActive));
-        proxies.put("sanity.active.sleeping_cd", new ProxyValueEntry<>(() -> getDefault().m_sleepingCd.get(), ConfigManager::finalizeCooldown));
         proxies.put("sanity.active.hurt_ratio", new ProxyValueEntry<>(() -> getDefault().m_hurtRatio.get(), ConfigManager::finalizeActive));
         proxies.put("sanity.active.baby_chicken_spawn", new ProxyValueEntry<>(() -> getDefault().m_babyChickenSpawning.get(), ConfigManager::finalizeActive));
         proxies.put("sanity.active.baby_chicken_spawn_cd", new ProxyValueEntry<>(() -> getDefault().m_babyChickenSpawningCd.get(), ConfigManager::finalizeCooldown));
@@ -81,6 +80,7 @@ public abstract class ConfigManager
         proxies.put("sanity.active.fishing", new ProxyValueEntry<>(() -> getDefault().m_fishing.get(), ConfigManager::finalizeActive));
         proxies.put("sanity.active.fishing_cd", new ProxyValueEntry<>(() -> getDefault().m_fishingCd.get(), ConfigManager::finalizeCooldown));
         proxies.put("sanity.active.farmland_trample", new ProxyValueEntry<>(() -> getDefault().m_farmlandTrample.get(), ConfigManager::finalizeActive));
+        proxies.put("sanity.active.inner_entity_kill", new ProxyValueEntry<>(() -> getDefault().m_innerEntityKill.get(), ConfigManager::finalizeActive));
         proxies.put("sanity.active.potting_flower", new ProxyValueEntry<>(() -> getDefault().m_pottingFlower.get(), ConfigManager::finalizeActive));
         proxies.put("sanity.active.potting_flower_cd", new ProxyValueEntry<>(() -> getDefault().m_pottingFlowerCd.get(), ConfigManager::finalizeCooldown));
         proxies.put("sanity.active.changed_dimension", new ProxyValueEntry<>(() -> getDefault().m_changedDimension.get(), ConfigManager::finalizeActive));

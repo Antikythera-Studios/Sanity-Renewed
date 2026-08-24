@@ -2,6 +2,7 @@ package guivnf.sanity_renewed.passive;
 
 import guivnf.sanity_renewed.capability.ISanity;
 import guivnf.sanity_renewed.config.ConfigProxy;
+import guivnf.sanity_renewed.entity.InnerEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.entity.EntityTypeTest;
@@ -27,7 +28,8 @@ public class Monster implements IPassiveSanitySource
             List<net.minecraft.world.entity.monster.Monster> monstersAround = player.level().getEntities(
                     EntityTypeTest.forClass(net.minecraft.world.entity.monster.Monster.class),
                     box,
-                    player::hasLineOfSight);
+                    m -> player.hasLineOfSight(m)
+                            && (!(m instanceof InnerEntity inner) || inner.isVisibleTo(player)));
             if (!monstersAround.isEmpty())
                 result = monster;
             for (net.minecraft.world.entity.monster.Monster m : monstersAround)

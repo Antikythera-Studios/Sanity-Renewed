@@ -25,6 +25,11 @@ public final class InnerEntitySpawner
     public static int spawnTimeout = 20 * 20;
 
     public static final float SPAWN_THRESHOLD = .75f;
+    public static final int BASE_MAX_NEARBY = 3;
+    public static final int MAX_NEARBY_CAP = 10;
+    public static final int KILLS_PER_EXTRA_SPAWN = 4;
+    public static final int KILLS_PER_TIMEOUT_STEP = 5;
+    public static final int MIN_SPAWN_TIMEOUT = 60;
     public static final Map<ServerPlayer, Integer> PLAYER_TO_SPAWN_TIMEOUT = new HashMap<>();
 
     private InnerEntitySpawner() {}
@@ -61,8 +66,11 @@ public final class InnerEntitySpawner
 
         Sanity s = SanityHolder.get(player);
         if (s == null) return false;
+
+        int kills = s.getInnerEntityKills();
+        int maxNearby = Math.min(BASE_MAX_NEARBY + kills / KILLS_PER_EXTRA_SPAWN, MAX_NEARBY_CAP);
         if (s.getSanity() < SPAWN_THRESHOLD
-                || getInnerEntitiesInRadius(player.level(), player.blockPosition(), detectionRad).size() >= 3)
+                || getInnerEntitiesInRadius(player.level(), player.blockPosition(), detectionRad).size() >= maxNearby)
             return false;
 
         int index = RAND.nextInt(EntityRegistry.INNER_ENTITIES.size());
@@ -86,7 +94,8 @@ public final class InnerEntitySpawner
                 && serverLevel.noCollision(entity)
                 && serverLevel.tryAddFreshEntityWithPassengers(entity))
         {
-            PLAYER_TO_SPAWN_TIMEOUT.put(player, spawnTimeout);
+            PLAYER_TO_SPAWN_TIMEOUT.put(player,
+                    Math.max(spawnTimeout / (1 + kills / KILLS_PER_TIMEOUT_STEP), MIN_SPAWN_TIMEOUT));
             return true;
         }
         return false;

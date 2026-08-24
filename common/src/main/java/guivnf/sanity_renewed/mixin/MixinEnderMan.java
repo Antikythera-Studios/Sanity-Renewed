@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(EnderMan.class)
 public abstract class MixinEnderMan
 {
-    @Inject(method = "isLookingAtMe", at = @At("TAIL"))
+    @Inject(method = "isLookingAtMe", at = @At("RETURN"))
     private void sanity_renewed$isLookingAtMe(Player player, CallbackInfoReturnable<Boolean> ci)
     {
         if (player instanceof ServerPlayer sp && Boolean.TRUE.equals(ci.getReturnValue()))

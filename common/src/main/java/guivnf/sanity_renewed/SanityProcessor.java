@@ -38,6 +38,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -62,6 +63,11 @@ public final class SanityProcessor
 
     public static final int MAX_GARLAND_TIMER = 60;
     public static final float SANITY_TARGET_THRESHOLD = .87f;
+    public static final float SANITY_VISIBLE_THRESHOLD = .6f;
+    public static final int INNER_ENTITY_KILL_DECAY_TIME = 20 * 30;
+    public static final int MIN_SLEEP_TICKS = 100;
+    public static final int SLEEP_GRACE_TICKS = 20;
+    public static final int SLEEP_SKIP_MARGIN = 40;
     public static final List<IPassiveSanitySource> PASSIVE_SANITY_SOURCES = Arrays.asList(
             new Passive(),
             new InWaterOrRain(),
@@ -163,9 +169,64 @@ public final class SanityProcessor
         decay(s.getItemCooldowns());
         decay(s.getBrokenBlocksCooldowns());
 
+        tickSleep(s, player);
+        tickInnerEntityKillDecay(s);
+
         shareSanity(player, s);
 
         guivnf.sanity_renewed.entity.InnerEntitySpawner.trySpawnForPlayer(player);
+    }
+
+    private static void tickSleep(Sanity s, ServerPlayer player)
+    {
+        if (player.isSleeping())
+        {
+            if (s.getSleepTicks() == 0)
+                s.setSleepStartTime(player.level().getDayTime());
+            s.setSleepTicks(s.getSleepTicks() + 1);
+            s.setSleepGrace(SLEEP_GRACE_TICKS);
+            trySleepAward(s, player);
+            return;
+        }
+
+        if (s.getSleepGrace() > 0)
+        {
+            s.setSleepGrace(s.getSleepGrace() - 1);
+            trySleepAward(s, player);
+            return;
+        }
+
+        s.setSleepTicks(0);
+        s.setSleepAwarded(false);
+    }
+
+    private static void trySleepAward(Sanity s, ServerPlayer player)
+    {
+        if (s.isSleepAwarded() || s.getSleepTicks() < MIN_SLEEP_TICKS)
+            return;
+        if (player.level().getDayTime() - s.getSleepStartTime() <= s.getSleepTicks() + SLEEP_SKIP_MARGIN)
+            return;
+
+        s.setSleepAwarded(true);
+        addSanity(s, ConfigProxy.getSleeping(dimOf(player)), player);
+    }
+
+    private static void tickInnerEntityKillDecay(Sanity s)
+    {
+        int kills = s.getInnerEntityKills();
+        if (kills <= 0 || s.getSanity() >= SANITY_VISIBLE_THRESHOLD)
+        {
+            s.setInnerEntityKillDecay(0);
+            return;
+        }
+
+        int timer = s.getInnerEntityKillDecay() + 1;
+        if (timer >= INNER_ENTITY_KILL_DECAY_TIME)
+        {
+            s.setInnerEntityKills(kills - 1);
+            timer = 0;
+        }
+        s.setInnerEntityKillDecay(timer);
     }
 
     private static void decay(Map<Integer, Integer> map)
@@ -226,6 +287,15 @@ public final class SanityProcessor
         return toReturn;
     }
 
+    public static boolean isValidInsaneTarget(LivingEntity target, float sanityThreshold)
+    {
+        if (!(target instanceof Player player) || player.isCreative() || player.isSpectator())
+            return false;
+
+        Sanity s = SanityHolder.get(player);
+        return s != null && s.getSanity() >= (sanityThreshold < 0f ? SANITY_TARGET_THRESHOLD : sanityThreshold);
+    }
+
     public static void handleActiveSourceForPlayer(
             ServerPlayer player,
             int id,
@@ -252,15 +322,22 @@ public final class SanityProcessor
         cds[id] = cd;
     }
 
-    public static void handlePlayerSlept(ServerLevel level)
+    public static void handleLevelSleepCompleted(ServerLevel level)
     {
+        if (level == null) return;
         for (ServerPlayer player : level.players())
         {
             if (player.isCreative() || player.isSpectator())
                 continue;
-            if (!player.isSleeping())
+
+            Sanity s = SanityHolder.get(player);
+            if (s == null || s.isSleepAwarded() || s.getSleepTicks() < MIN_SLEEP_TICKS)
                 continue;
-            handleActiveSourceForPlayer(player, ActiveSanitySources.SLEEPING, ConfigProxy::getSleepingCooldown, ConfigProxy::getSleeping);
+            if (!player.isSleeping() && s.getSleepGrace() <= 0)
+                continue;
+
+            s.setSleepAwarded(true);
+            addSanity(s, ConfigProxy.getSleeping(dimOf(player)), player);
         }
     }
 

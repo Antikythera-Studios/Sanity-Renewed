@@ -14,6 +14,12 @@ public class Sanity implements ISanity, IPassiveSanity, IPersistentSanity
     private boolean m_dirty = true;
     private int m_emAngerTimer;
     private int m_garlandTimer;
+    private int m_innerEntityKills;
+    private int m_innerEntityKillDecay;
+    private int m_sleepTicks;
+    private int m_sleepGrace;
+    private long m_sleepStartTime;
+    private boolean m_sleepAwarded;
     private float m_sanityVal;
     private float m_passive;
     private Vec3 m_stuckMultiplier = Vec3.ZERO;
@@ -32,6 +38,8 @@ public class Sanity implements ISanity, IPassiveSanity, IPersistentSanity
         tag.putFloat("sanity.sanity", m_sanityVal);
         tag.putInt("sanity.ender_man_anger_timer", m_emAngerTimer);
         tag.putInt("sanity.garland_timer", m_garlandTimer);
+        tag.putInt("sanity.inner_entity_kills", m_innerEntityKills);
+        tag.putInt("sanity.inner_entity_kill_decay", m_innerEntityKillDecay);
 
         // TODO: do lazy serialization instead
         tag.putInt("sanity.sleeping", m_cds[ActiveSanitySources.SLEEPING]);
@@ -53,6 +61,8 @@ public class Sanity implements ISanity, IPassiveSanity, IPersistentSanity
         setSanity(tag.getFloat("sanity.sanity"));
         setEnderManAngerTimer(tag.getInt("sanity.ender_man_anger_timer"));
         setGarlandTimer(tag.getInt("sanity.garland_timer"));
+        setInnerEntityKills(tag.getInt("sanity.inner_entity_kills"));
+        setInnerEntityKillDecay(tag.getInt("sanity.inner_entity_kill_decay"));
 
         m_cds[ActiveSanitySources.SLEEPING] = tag.getInt("sanity.sleeping");
         m_cds[ActiveSanitySources.SPAWNING_BABY_CHICKEN] = tag.getInt("sanity.baby_chicken_spawn");
@@ -155,6 +165,70 @@ public class Sanity implements ISanity, IPassiveSanity, IPersistentSanity
     public int getGarlandTimer()
     {
         return m_garlandTimer;
+    }
+
+    @Override
+    public void setInnerEntityKills(int value)
+    {
+        m_innerEntityKills = value;
+    }
+
+    @Override
+    public int getInnerEntityKills()
+    {
+        return m_innerEntityKills;
+    }
+
+    @Override
+    public void setInnerEntityKillDecay(int value)
+    {
+        m_innerEntityKillDecay = value;
+    }
+
+    @Override
+    public int getInnerEntityKillDecay()
+    {
+        return m_innerEntityKillDecay;
+    }
+
+    public void setSleepTicks(int value)
+    {
+        m_sleepTicks = value;
+    }
+
+    public int getSleepTicks()
+    {
+        return m_sleepTicks;
+    }
+
+    public void setSleepGrace(int value)
+    {
+        m_sleepGrace = value;
+    }
+
+    public int getSleepGrace()
+    {
+        return m_sleepGrace;
+    }
+
+    public void setSleepStartTime(long value)
+    {
+        m_sleepStartTime = value;
+    }
+
+    public long getSleepStartTime()
+    {
+        return m_sleepStartTime;
+    }
+
+    public void setSleepAwarded(boolean value)
+    {
+        m_sleepAwarded = value;
+    }
+
+    public boolean isSleepAwarded()
+    {
+        return m_sleepAwarded;
     }
 
     @Override
