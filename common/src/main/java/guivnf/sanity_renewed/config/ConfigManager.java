@@ -97,6 +97,7 @@ public abstract class ConfigManager
 
         // sanity.entity
         proxies.put("sanity.entity.sane_see_inner_entities", new ProxyValueEntry<>(() -> getDefault().m_saneSeeInnerEntities.get(), ConfigManager::noFinalize));
+        proxies.put("sanity.entity.disable_inner_entity_spawning", new ProxyValueEntry<>(() -> getDefault().m_disableInnerEntitySpawning.get(), ConfigManager::noFinalize));
 
         // sanity.client
         // sanity.client.indicator

@@ -296,6 +296,11 @@ public abstract class ConfigProxy
         return ConfigManager.proxyb("sanity.entity.sane_see_inner_entities", dim);
     }
 
+    public static boolean getDisableInnerEntitySpawning(ResourceLocation dim)
+    {
+        return ConfigManager.proxyb("sanity.entity.disable_inner_entity_spawning", dim);
+    }
+
     public static boolean getRenderIndicator(ResourceLocation dim)
     {
         return ConfigManager.proxyb("sanity.client.indicator.render", dim);
