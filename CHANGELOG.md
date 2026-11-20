@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## 21.1.4 - 2026-11-20
+
+### Added
+  - Option to stop inner entities from spawning altogether (disable_inner_entity_spawning).
+
+---
+
 ## 21.1.3 - 2026-08-24
 
 ### Added

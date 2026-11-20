@@ -2,6 +2,7 @@ package guivnf.sanity_renewed.entity;
 
 import guivnf.sanity_renewed.capability.Sanity;
 import guivnf.sanity_renewed.capability.SanityHolder;
+import guivnf.sanity_renewed.config.ConfigProxy;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -53,7 +54,8 @@ public final class InnerEntitySpawner
     public static boolean trySpawnForPlayer(ServerPlayer player)
     {
         if (player == null || player.isCreative() || player.isSpectator()
-                || player.level().getDifficulty().equals(Difficulty.PEACEFUL))
+                || player.level().getDifficulty().equals(Difficulty.PEACEFUL)
+                || ConfigProxy.getDisableInnerEntitySpawning(player.level().dimension().location()))
             return false;
 
         PLAYER_TO_SPAWN_TIMEOUT.putIfAbsent(player, 0);

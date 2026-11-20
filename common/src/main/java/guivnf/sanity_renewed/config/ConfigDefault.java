@@ -72,6 +72,7 @@ public class ConfigDefault
     public final DoubleValue m_insanePlayerCompany;
 
     public final BooleanValue m_saneSeeInnerEntities;
+    public final BooleanValue m_disableInnerEntitySpawning;
 
     public final BooleanValue m_renderIndicator;
     public final BooleanValue m_twitchIndicator;
@@ -335,6 +336,11 @@ public class ConfigDefault
                         "Mobs will still be there server-side and will count towards passive sanity",
                         "Players who are targeted by inner entities see them regardless")
                 .define("sane_see_inner_entities", false);
+        m_disableInnerEntitySpawning = builder
+                .comment(
+                        "Whether to stop inner entities from spawning altogether",
+                        "Inner entities already in the world are left alone and still count towards passive sanity")
+                .define("disable_inner_entity_spawning", false);
 
         builder.pop();
 
